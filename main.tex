@@ -1,0 +1,63 @@
+
+\documentclass{UoYCSproject}
+\addbibresource{Bibliography.bib}
+
+\usepackage{subfiles}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{ {./Sections/images/} }
+
+\title{GPIG Group Report}
+\author{Team C}
+\date{June 2019}
+
+\begin{document}
+\pagenumbering{roman}
+\maketitle
+\pagenumbering{arabic}
+\chapter{System Definition} \label{systemdef}
+\subfile{Sections/system_definition}
+
+\chapter{System Architecture} \label{systemarch}
+\subfile{Sections/system_architecture}
+
+\chapter{Current Implementation} \label{currentimp}
+\subfile{Sections/current_implementation}
+
+\chapter{Software Lifecycle} \label{softwarelife}
+\subfile{Sections/software_lifecycle}the sy
+
+\chapter{Market Assessment} \label{market}
+\subfile{Sections/market_assessment}
+
+\chapter{Development Summary} \label{devsummary}
+\subfile{Sections/development_summary}
+
+\appendix
+\chapter{Appendix}
+
+\begin{table}[!htbp]
+\centering
+    \begin{tabular}{p{0.8\textwidth}|p{0.2\textwidth}}
+& \\
+Integrated Circuit [5] & £5.75 \\
+Solenoid [6] & £3.92 \\
+Battery [7] & £26.37 \\
+PCB [8] & £27.57 \\
+\textbf{Total of main components} & \textbf{£63.61} \\
+& \\
+Cost of additional components 
+(capacitors, resistors, voltage regulators etc). 
+Unknown exact amount until actual hardware developed so 
+30\% of main component price used & £19.08 \\
+Reinforced metal briefcase [9] & £16.43 \\
+\textbf{Overall} & \textbf{£99.12} \\
+\end{tabular}
+    \caption{Briefcase Material Costs}
+    \label{tab:briefcasematcosts}
+\end{table}
+
+\printbibliography
+\end{document}
