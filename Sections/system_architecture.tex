@@ -307,7 +307,17 @@ URL & Methods & Description \\
 \hline
 \end{tabular}
 \end{center}
+
 \subsection{Maps API}
+
+The second major component of the backend part of the system is the mapping and routing API which is used by the couriers to get step by step directions and by supervisors to view and confirm the routes that couriers will take.
+
+For the prototype system Google Maps has been used for all of the mapping data however we would like to offer customers the option of using other mapping services or even their own maps in the product when it is brought to market. This could allow some customers to provide more detailed maps of certain areas for example. The API provides a route along with the step by step direction for how to reach the destination, this route can then easily be plotted on a map and the directions can easily be displayed by the frontend of the system that the couriers and supervisors interact with.
+
+Currently direction and routes allow for two modes of transport, driving and flying. We may wish to add to this in future to allow for other modes of transport to be used for example trains or walking. The customer could have the option to select their preferred modes of transport. The constraints on the routes are currently implemented as a list of way points that can be added by supervisors to ensure that certain areas are avoided however in the finished product this would be automated.
+
+As with the database API this is a RESTful API that provides responses in JSON and runs as part of a flask app. The whole API (both the database API and the routing API) are part of the same flask app that can easily be called by the frontend part of the system that will be used by both the couriers and supervisors.
+
 \section{Communication}
 
 \section{Briefcase}
@@ -319,4 +329,6 @@ The design of the briefcase must be considered from both a hardware and software
     \label{fig:briefcase_architecture}
 \end{figure}
 
-As it is common for microcontrollers to not have USB hosting capabilities, USB hosting hardware is required to read the contents of a memory stick that is plugged into the concealed USB port. This hardware could be similar to the hardware found on the Arduino USB Host Shield \cite{arduinoUSBHost}, or a microcontroller with USB On-The-Go (OTG) capabilities \cite{techopediaUSBOTG} such as the 
+As it is common for microcontrollers to not have USB hosting capabilities, USB hosting hardware is required to read the contents of a memory stick that is plugged into the concealed USB port. This hardware could be similar to the hardware found on the Arduino USB Host Shield \cite{arduinoUSBHost}, or a microcontroller with USB On-The-Go (OTG) capabilities \cite{techopediaUSBOTG} such as the NXP MCF52211 ColdFire \cite{nxpDatasheet}. As well as this, the concealed USB port must be connected to the chosen microcontroller in order to program the briefcase with the set encrypted message.
+
+The microcontroller is connected to an electronic lock (such as a solenoid \cite{solenoidDigikey} or a motorised lock \cite{motorisedLock}). Of course, microcontrollers are usually unable to drive such devices, so some form of driver hardware (such as a relay or a transistor) is anticipated. Furthermore, in the case of a customer deciding that they would like the contents of the briefcase destroyed in an unfortunate incident, a concealed panic button is connected to the microcontroller, which is also connected to some form of contents destruction mechanism via an appropriate driver. The contents destruction mechanism has not yet been formally decided and further research and development will be required to find a safe and effective method. Potentials methods include driving a large current through a thin wire to set the contents of the briefcase alight, using hydraulics to spray ink onto the contents or installing a paper shredding mechanism within the briefcase. Each of these ideas have their own unique disadvantages, such as whether they make the briefcase safe for air travel or are too heavy to implement.
