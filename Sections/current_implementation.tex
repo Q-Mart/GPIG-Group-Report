@@ -1,6 +1,12 @@
 A summary of the state of the implementation, at the time of the demonstration, and an assessment of what needs to be done in order to develop the system to an initially deployable state
 
 \section{Frontend}
+\subsection{Courier View}
+\begin{flushleft}
+At the time of the demonstration, the courier’s front end includes a hard-coded single user login system, a way of visualising the route that the back end has generated on a map, step by step directions are shown, routes can be requested from the back end by the user and messages can be sent by the user and all messages to and from the user are shown.
+
+To develop the system to initially deployable state, this section needs to be able to request the list of couriers and the passwords for them so that the login system can support all couriers in the back end and as they are added by the supervisor. The login system could also be extended so that the rest of the content shown is hidden until the user has logged in instead of how it is currently implemented where the forms and buttons can’t be used and messages, routes and directions aren’t shown until the user has logged in. Currently, there are no measures in place to make communication secure so work needs to be done to encrypt/decrypt data sent and received from requests made to the back end.
+\end{flushleft}
 \section{Backend}
 \subsection{Customer database}
 \begin{flushleft}
@@ -19,6 +25,11 @@ The only further work required to deploy this component is further configuring t
 \begin{flushleft}
 Based on the fact that these require modifications to configuration files, but no development work, we estimate the component would be ready to deploy given at most two days of extra work.
 \end{flushleft}
+
+\subsection{Maps and routing}
+
+The maps and routing part of the backend system is part of the same API as the customer database part of the backend. This uses the Google maps API \cite{MapsAPI} for most of the routing and directions, some processing it done on this data to allow it to be easily plotted in the frontend of the system. Currently the Google Maps API is used to provide directions that the couriers can use to drive to destinations, in the future we would like to add a larger range of transport options. Along with the Google Maps API the routing system uses a database of airports \cite{AirpotFile} to allow for travel between different countries. Currently this does not provide any specific flight information but does give an estimated flight time. Before the product was brought to market we would like to find information about specific flights that the couriers would take so these can be automatically booked and the couriers can be given more detailed directions.
+
 \section{Briefcase}
 % Work to be done: work out how to destroy items
 

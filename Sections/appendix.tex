@@ -1,0 +1,47 @@
+
+\newcommand{\specialcell}[2][c]{%
+  \begin{tabular}[#1]{@{}p{0.5\textwidth}@{}}#2\end{tabular}}
+  
+\centering
+\begin{longtable}{|p{0.05\textwidth}|m{0.27\textwidth}|p{0.5\textwidth}|p{0.08\textwidth}|}
+    \hline
+        \textbf{ID} & \textbf{Risk Description} & \textbf{Mitigation (M) and/or Contingency (C) Actions} & \textbf{Risk Status} \\
+    \hline
+    10-P & Personnel shortfalls - this may be due to absence, inefficiency of team member or lack of input from team member
+    I-3 L-3 S-3 & \specialcell{M: If possible, have at least 2 people assigned to each task to ensure there is more motivation and if someone is absent, someone can pick up their work easily.\\
+    M: Work to the agile methodology so that issues are picked up quickly \\
+    C: If necessary speak to module leader regarding absence/lack of effort} & C \\
+    \hline
+    11-P & New requirements added
+    I-3 L-4 S-4 & M: Work to the agile methodology so that the effects of these changes can be discussed quickly and tasks can be assigned to team members & C \\
+    \hline
+    12-P & Tools not always having availability & \specialcell{M: Google Drive has been used for documentation to ensure the most recent changes are kept up to date\\
+    M: Github has been used to ensure the most recent changes made to both the final report and the code are kept up to date and team members will also keep local copies} & C \\
+    \hline
+    13-P & Duplication of tasks & M: Ensure tasks are assigned to each person
+    M: Ensure regular meetings to keep up with progress of tasks & C \\
+    \hline
+    \caption{Project Risks}
+    \label{tab:projectrisks}
+\end{longtable}
+
+\begin{table}[!htbp]
+    \centering
+        \begin{tabular}{p{0.8\textwidth}|p{0.2\textwidth}}
+        & \\
+        Integrated Circuit \cite{nxpDigikey} & £5.75 \\
+        Solenoid \cite{solenoidDigikey} & £3.92 \\
+        Battery \cite{batteryDigikey} & £26.37 \\
+        PCB \cite{pcbFabrication} & £27.57 \\
+        \textbf{Total of main components} & \textbf{£63.61} \\
+        & \\
+        Cost of additional components 
+        (capacitors, resistors, voltage regulators etc). 
+        Unknown exact amount until actual hardware developed so 
+        30\% of main component price used & £19.08 \\
+        Reinforced metal briefcase \cite{reinforcedBriefcase} & £16.43 \\
+        \textbf{Overall} & \textbf{£99.12} \\
+    \end{tabular}
+\caption{Briefcase Material Costs}
+\label{tab:briefcasematcosts}
+\end{table}

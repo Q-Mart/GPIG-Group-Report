@@ -6,7 +6,10 @@
 \usepackage{tabularx}
 \usepackage{multicol}
 \usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{makecell}
 \usepackage{float}
+\usepackage{enumitem}
 \graphicspath{ {./Sections/images/} }
 
 \title{GPIG Group Report}
@@ -37,27 +40,9 @@
 
 \appendix
 \chapter{Appendix}
+\subfile{Sections/appendix}
 
-\begin{table}[!htbp]
-\centering
-    \begin{tabular}{p{0.8\textwidth}|p{0.2\textwidth}}
-& \\
-Integrated Circuit \cite{nxpDigikey} & £5.75 \\
-Solenoid \cite{solenoidDigikey} & £3.92 \\
-Battery \cite{batteryDigikey} & £26.37 \\
-PCB \cite{pcbFabrication} & £27.57 \\
-\textbf{Total of main components} & \textbf{£63.61} \\
-& \\
-Cost of additional components 
-(capacitors, resistors, voltage regulators etc). 
-Unknown exact amount until actual hardware developed so 
-30\% of main component price used & £19.08 \\
-Reinforced metal briefcase \cite{reinforcedBriefcase} & £16.43 \\
-\textbf{Overall} & \textbf{£99.12} \\
-\end{tabular}
-    \caption{Briefcase Material Costs}
-    \label{tab:briefcasematcosts}
-\end{table}
+
 
 \printbibliography
 \end{document}
