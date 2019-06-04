@@ -1,8 +1,9 @@
 
 
 \section{Overview}
+The team began by gathering requirements and deriving a system design, while creating a risk register in parallel. Where necessary, informal specifications were written to allow teams to develop components in parallel. The team individually tested their components throughout development. Once all components were completed they were integrated together, and the team assessed whether the system met their requirements.
 
-\section{Requirements Analysis}
+\section{Requirements Analysis} \label{requirements}
 
 Some general requirements have been made directly from the initial brief (marked as B below), which were then extended to include those that our prototype solution requires (marked as P). The aim was to show as many elements of our final solution as possible. Due to the cost and time it would take to prototype a satellite, this was left out of the prototype goals. Each other element in the system will be demonstrated to some level of implementation as this was achievable within the timeframe, budget and skills of the team. 
 
@@ -59,6 +60,15 @@ Requirements 10-13 allow the supervisor in the control room to have a full overv
 
 \section{Design}
 
+After collecting the requirements for the system we created a basic block diagram of the components of the system that we would like to created. A subset of these components have then been implemented in the prototype of the system. This diagram can be seen in \ref{fig:SystemDesign}. It is worth noting that under normal operation the only communication that goes over the internet is to the customer who gets only a limited view of the data. 
+
+\begin{figure}[h]
+\includegraphics[scale=0.5]{SystemDesign.jpg}
+    \centering
+    \caption{Diagram of the overall system design}
+    \label{fig:SystemDesign}
+\end{figure}
+
 As part of designing the final solution, a risk assessment was performed. This enabled the team to develop our initial ideas into something more concrete, ensuring major risks to the whole system including the courier, briefcase and communication were taken in to account, as when combined, securing these parts of the system ensures that the packages reach their final destination. The risk assessment findings were documented in a risk register table as seen in Table \ref{tab:riskRegister}.
 
 The risk register scores each risks based on two factors - Impact (I) and Likelihood (L) to give an overall score of Severity (S). Each risk is given an ID which contains a unique number and what the risk applies to/comes from. The categories are as follows: Communication/Transport (C), Briefcase (B), Courier  (M) or General (G). Each of these is rated on a scale of 1 to 5 where 5 is very likely/has a high impact/is very severe, these are also colour coordinated to represent the risk to the project/product. Each risk has a risk status which can either be Identified (I), Controlled/Accepted (C) or Resolved (R). The risks to the project itself are shown within Appendix \ref{tab:projectrisks}, these were considered to ensure completion of the prototype, report and presentation to a high standard.
@@ -67,8 +77,9 @@ The risk register scores each risks based on two factors - Impact (I) and Likeli
 \newcommand{\specialcell}[2][c]{%
   \begin{tabular}[#1]{@{}p{0.5\textwidth}@{}}#2\end{tabular}}
   
-\centering
+
 \begin{longtable}{|p{0.05\textwidth}|m{0.27\textwidth}|p{0.5\textwidth}|p{0.08\textwidth}|}
+
 \hline
     \textbf{ID} & \textbf{Risk Description} & \textbf{Mitigation (M) and/or Contingency (C) Actions} & \textbf{Risk Status} \\
 \hline
@@ -119,11 +130,23 @@ C: The briefcase will have a USB port enabling the battery to be charged} & R \\
     \label{tab:riskRegister}
 \end{longtable}
 
-   
-
+Additionally to the risk register, members of the group wrote a simple outline of the customer database, and used this to derive a specification of the API. Other members of the team researched the Google Maps API and developed a specification for the routes section of the API in parallel. All the external tools used in the product (Redis, Google Maps, Docker) were discussed in meetings, and the team decided which were suitable for the product in terms of functionality, security, and personal experience. All design documents produced were reviewed by all members of the team prior to being used in development.
 
 \section{Development}
 
-\section{Testing}
+These specifications allowed frontend and backend development to progress in parallel over 5 weeks, along with the briefcase prototype. Development began on the 30th of April and completed on the 3rd of June. Prior to integration, the team was distributed as follows:
 
-\section{Other?}
+\begin{itemize}
+    \item Frontend: 3 developers
+    \item Backend: 2 developers
+    \item Briefcase: 1 developer
+\end{itemize}
+
+The frontend team developed the supervisor and courier components based on the specification of what functionality the backend would provide, while the backend team programmed their solution to deliver this functionality as specified. In a few cases, the backend team decided to deviate from the specification to deliver the same functionality in a simpler manner, or the frontend team requested slighttly different features. Whenever changes were necessary this was communicated in meetings and over Slack, and the documentation was updated accordingly. Components were developed and tested on their own Git branches and merged after a thorough code review.
+
+The entire team spent the final two weeks of development integrating the backend and frontend. Some wrote code, while others investigated and fixed bugs discovered throughout the process. Team members who had no tasks to complete at a given time compiled documentation for the report and presentation.
+
+\section{Testing}
+Due to the limited time available, the team did not impose any overall testing standards for the project. Members tested their components as they felt necessary. The frontend underwent a user acceptance test using a web browser. The routing API was manually tested using the Insomnia REST client. We decided against unit testing due to the variability of routes, as it would be impossible to achieve thorough coverage. Additionally, this component relies on Google Maps, which we trust has been thoroughly tested, though we aim to test it was integrated correctly prior to a full product release. The database API was tested manually using Postman, and unit tested to functional coverage. This component was tested more thoroughly due to the frontend relying heavily on it.
+
+These tests allowed us to develop a working prototype. However, our product is mission critical, and as such requires thorough automated testing of every component to a higher standard of coverage prior to deployment.

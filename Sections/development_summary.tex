@@ -1,22 +1,33 @@
-A summary of the development, including group performance, and those aspects of the group organisation that worked well and those that, with hindsight, would have been tackled differently
+
 
 \section{Group Organisation}
-We decided not to have a set team leader as we felt it was not necessary for such a small team, and it would allow each member to have an equal voice within the team.  One team member was chosen to act as a point of contact between the team and the project clients. One team member volunteered for this role, therefore they were automatically selected. Another team member was selected to communicate with the other teams, so that each team's solution could be integrated into our own. Once again, only one team member volunteered and was chosen for this role.
+We decided not to have a set team leader as we felt it was not necessary for such a small team, and it would allow each member to have an equal voice within the team.  One team member was chosen to act as a point of contact between the team and the project clients. One team member volunteered for this role, therefore they were automatically selected. Another team member was selected to communicate with the other teams, so that each team's solution could be integrated into our own. Once again, only one team member volunteered and was chosen for this role. One team member volunteered to act as a secretary and take minutes of all the meetings.
 
 A Slack \cite{slack} channel was created so that the team could communicate outside of meetings and also allow future meetings to be organised. A GitHub \cite{github} repository was created to store software written for the project. Google Drive \cite{googledrive} was used to store and share all other documents, such as system architecture drawings.
 
+The team decided to use an agile development approach in creating the prototype. Agile is well suited to the rapid development that was needed to create a working prototype in the short time frame. Initially, the team held weekly meetings to discuss progress and future plans. As the deadline approached, the meetings became more frequent, with 2 meetings each week. By holding more meetings, we were able to tackle the smaller tasks that arose as the prototype neared completion.
+
+We opted not to use a dedicated issue tracker, such as Jira \cite{jira}. Due to the small scope of the prototype, it was deemed unnecessary. Each area of the prototype was assigned to a team member, so when issues were discovered they were sent to the relevant team member using the Slack channel.
 
 \begin{itemize}
     \item Stuff we did and how well it worked
     \item What should we have done differently?
-    \item Evaluation of solution against initial requirements
 \end{itemize}
 
 \section{Group Performance}
-Team Structure evaluation
 
-Slack evaluation
+\subsection{Team Structure Evaluation}
 
-Github Evaluation
+As previously mentioned we did not designate a team leader for the project. We found that this worked well for us as we just discussed all task to be completed at the team meetings and allocated them to team members to complete. We found that team members would complete tasks quickly and would promptly as for help if they required it. This meant that any issues were quickly resolved within the team without the need for a team leader to chase up team members. All tasks were divided up and assigned to team members with relevant skills and were distributed to try and ensure the workload was balanced across the team.
 
-Google Drive evaluation
+\subsection{Tool Evaluation}
+
+As mentioned above we used a range of tools to help the team to collaborate effectively on the project. We used Slack \cite{slack} to allow the team to keep in communication between group meetings, this was regularly active and helped the team support each other and discuss problems when they arose. 
+
+We had a Github \cite{github} repository that was used to store all code relating to our prototype and allow the team to easily collaborate on the prototype and this worked well. As we hoped using this repository did allow for easy collaboration on the source code. However we did not enforce any code review process, much of the code was reviewed by other team members however this is something we would like to change in the future to ensure all code has been reviewed before making its way into the system. As well as using a Github repository we also used Docker \cite{docker} to allow for easy collaboration so that each developer did not have to set up all the project dependencies on their machine. On the whole this worked well once all team members successfully got docker up and running, this proved to be challenging on some operating systems.
+
+Finally we Google Drive \cite{googledrive} and Overleaf \cite{overleaf} to allow for collaboration on documents such as this one and on the slides for the final presentation. Both of these worked really well as they allowed multiple members of the group to work together on documents in real time. Both of the systems also allow for comments to be left on documents which proved extremely useful in the proof reading stages.
+
+\subsection{Evaluation Against Requirements}
+
+As detailed in Section \ref{requirements}, in each meeting a check of which requirements had been implemented was carried out. This was also done at the end of the implementation stage to check our progress. At the end of this phase, 14 of the 16 requirements were implemented. The only 2 that were not completed were those within the Customer view section - requirements 8 and 9. As we progressed through the development stages, we realised that there was insufficient time to implement all views of the application. As the courier view and the control room view were the most complex and harder to visualise without a prototype, these were prioritised over the customer view on the front end of the application. The customer view would only contain 2 items - the status and the ETA of the delivery which is very easily imagined by the customer. 

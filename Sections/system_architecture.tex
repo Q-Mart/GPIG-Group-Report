@@ -1,9 +1,9 @@
-An overview of the system architecture, including the way in which the capabilities of new and emerging digital technologies have been leveraged, the types of data utilised and how the prototyped system supports the safe and secure routing of a diplomatic courier travelling from an initial location to a series of destinations in the world 
+
 
 \section{Front-end} \label{frontendarch}
-In order to allow the users to interact with our system, we have designed an interface for each user type. We can distinguish three different types of people that will need to access and alter the appropriate elements of our product. First, there are the couriers which must be given instructions to follow together with the recipient information. Next, we have the supervisors which are responsible for guiding the couriers and passing optimal routes to them. Finally we have the customers of our system that should be noticed about the progress of their delivery.
+In order to allow the users to interact with our system, we have designed an interface for each user type. We can distinguish three different types of people that will need to access and alter the appropriate elements of our product. First, there are the couriers which must be given instructions to follow together with the recipient information. Next, we have the supervisors which are responsible for guiding the couriers and passing optimal routes to them. Finally we have the customers of our system that should be notified about the progress of their delivery.
 
-Each user will have their own login and password with which they can access their account on the appropriate application. To ensure that the data passed between the supervisors and couriers is secure, it will be sent through our own network described in the communication section. The information shared with the customer accounts will be very limited, therefore in the design we propose to use the ordinary internet connection available to everyone.
+Each user will have their own login and password with which they can access their account on the appropriate application. To ensure that the data passed between the supervisors and couriers is secure, it will be sent through our own network described in the communication section. The information shared with the customer accounts will be limited, therefore in the design we propose to pass encrypted messages through ordinary internet connection available to everyone.
 
 \subsection{Supervisors application} \label{supervisorsarch}
 The most complex front end component is the application for the supervisors which will be used in the control room. It will be implemented as a dynamic web application. Once a supervisors log in to the system, they will be able to open the following views available through the navigation bar at the top of the page:
@@ -12,18 +12,22 @@ The most complex front end component is the application for the supervisors whic
     \item Couriers - allows the supervisors to create new courier accounts in the database and edit the existing ones. They will be able to see the details of each courier including their current location and busy status. Another key feature of this view enables communication with each courier individually by sending/receiving direct text messages.
     \item Customers - simple view allowing for creation and edition of customer records. The supervisor will also be able to see any previous orders from each customer.
     \item Deliveries - allows for creation and edition of delivery missions. During the creation process, a supervisor will be able to select the sender and recipient from of the delivery, allocate multiple couriers to a mission and add any constraints to the route. Once all of those options have been selected, a route will be generated. The supervisor can then inspect the route and correct it by adding points to go through if necessary before adding the delivery to the database.
-    \item Server logs - 
+    \item Server logs - allows for inspection of every modification made to the database. The server logs will be created after each request updating the database and no one will be able to change them in any way. In case of a human error the contents of server logs will be a clear proof of who is responsible for it. 
 \end{itemize}
 \subsection{Couriers application} \label{couriersarch}
-\subsection{Customers application} \label{customersarch}
+Since the couriers will be moving around the globe, the best way for them to interact with the system will be through a smart phone device. Each courier will be provided with a phone with our mobile courier application installed on it, which can only connect with our satellites. 
 
+The app will allow a registered courier to see the route for the delivery that he/she is currently assigned to, together with a schedule and a set of step by step instructions containing additional information about any hotels/tickets booked by the control room. They will also be provided with the recipient's contact details.The courier will also be able to communicate with the control room with use of text messages through the application in case of additional questions or reporting a problem. 
+
+The device will send the couriers position in short intervals to allow the control room to track their location in real time.
+\subsection{Customers application} \label{customersarch}
+To promote our services to our potential customers we will create a website which describes them clearly. The website will allow to register as a customer and order deliveries by giving the details of a sender and recipient together with a deadline. A customer will then be able to see crucial events about their deliveries together with an ETA of delivery.
 
 
 \section{Back-end} \label{backendarch}
 \subsection{Customer database} \label{databasearch}
-\begin{flushleft}
 The first component of the backend is a database of customer and staff information. Its most important task is storing delivery information and constraints, which are merged with the maps database to provide directions to the courier. It is designed to store the following datatypes:
-\end{flushleft}
+
 \begin{minipage}{6.5cm}
     Customer: \{
     \begin{itemize} 
@@ -58,9 +62,9 @@ The first component of the backend is a database of customer and staff informati
     \end{itemize}
     \hspace{1cm} \\
 \end{minipage}
-\begin{flushleft}
+
 Every customer is a sender or receiver in a delivery: 
-\end{flushleft}
+
 \begin{minipage}{6.5cm}
     Delivery: \{
     \begin{itemize}
@@ -94,14 +98,14 @@ Every customer is a sender or receiver in a delivery:
         \item[] \textit{reinforced briefcase password}
         \item[] \textit{identifiers of couriers handling the package}
         \item[] \textit{identifier of courier currently holding the package}
-        \item[]  \textit{identifiers of supervisors handling the package}
+        \item[] \textit{identifiers of supervisors handling the package}
         \item[] \textit{identifier of delivery constraint}
     \end{itemize}
     \hspace{1cm} \\
 \end{minipage}
-\begin{flushleft}
+
 Every delivery links to a constraint object defining customer preferences.
-\end{flushleft}
+
 \begin{minipage}{7cm}
     Constraint: \{ 
     \begin{itemize}
@@ -138,9 +142,9 @@ Every delivery links to a constraint object defining customer preferences.
     \end{itemize}
     \hspace{1cm} \\
 \end{minipage}
-\begin{flushleft}
+
 Constraints exist on three levels: delivery, customer, and overall. Every delivery has its own constraints, allowing specific objects to be transported according to particular requirements. Every customer can have constraints applied to all of the deliveries where they are the sender. For example, government bodies may wish for none of their packages to cross countries they have strained diplomatic relations with. Finally, overall constraints are applied to all deliveries. These are applied when it becomes unsafe for anyone to traverse a particular area. Additional to these constraints we store staff contact and authentication data.
-\end{flushleft}
+
 \begin{minipage}{6.5cm}
     Courier: \{
     \begin{itemize}
@@ -177,9 +181,9 @@ Constraints exist on three levels: delivery, customer, and overall. Every delive
     \end{itemize}
     \hspace{1cm}
 \end{minipage}
-\begin{flushleft}
+
 The external and company attributes allow us to collaborate with other companies by outsourcing couriers.
-\end{flushleft}
+
 \begin{minipage}{6.5cm}
 Supervisor: \{
 \begin{itemize}
@@ -202,9 +206,9 @@ Supervisor: \{
 \end{itemize}
 \hspace{1cm}
 \end{minipage}
-\begin{flushleft}
+
 The database also stores all messages sent between staff on the private network.
-\end{flushleft}
+
 \begin{minipage}{6.5cm}
 Message: \{
 \begin{itemize}
@@ -231,9 +235,9 @@ Message: \{
 \end{itemize}
 \hspace{1cm}
 \end{minipage}
-\begin{flushleft}
+
 Finally, the database stores an audit trail for every delivery, using objects called delivery events.
-\end{flushleft}
+
 \begin{minipage}{6.5cm}
 DeliveryEvent: \{
 \begin{itemize}
@@ -266,24 +270,22 @@ DeliveryEvent: \{
     \caption{Outline of Redis database}
     \label{fig:redis_database}
 \end{figure}
-\begin{flushleft}
+
 This information will be stored in a Redis database within a Docker image, for ease of setup and added security. Redis was chosen for its efficiency and security-- it is a simple database designed with speed in mind, and has measures in place to avoid third party attacks\cite{redisSecutiry}. It allows us to rename and disable commands such that potential attackers cannot send commands to the database. We will use this to ban clearing the database contents, and obscure all commands used by the API code. Redis has no concept of string escaping, making injection attacks impossible. It does not support encryption, but to compensate for this we will use a firewall to block all but the API server from communicating with it, and encrypt all API responses.
-\end{flushleft}
-\begin{flushleft}
+
 A set of Python functions will be defined to verify and process data sent to Redis such that it contains the attributes and data types described. These functions are to be used by a class called RedisInterface. This is a wrapper around the Redis Python package, implementing functions for adding and retrieving all of the above objects.
-\end{flushleft}
-\begin{flushleft}
+
 An API layer will be written on top of this using Flask, allowing the frontend to access, update, and delete data without needing knowledge of which RedisInterface methods to call. This API will also be enclosed in a Docker image, allowing us full control of the API server. The architecture of the Redis API is summarised in the following figure.
-\end{flushleft}
+
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.5]{redis_backend_diagram.png}
     \caption{Redis API software architecture}
     \label{fig:redis_architecturel}
 \end{figure}
-\begin{flushleft}
+
 The API is designed with the database structure in mind, providing simple links to constraints on all levels, lists of staff and customers, as well as specific information retrievable by ID. The following table provides a list of URLs, callable methods, and expected API responses.
-\end{flushleft}
+
 \begin{center}
 \begin{tabular}{ | m{6.1cm} | m{3.8cm}| m{6cm} | } 
 \hline
@@ -324,17 +326,33 @@ URL & Methods & Description \\
 
 The second major component of the backend part of the system is the mapping and routing API which is used by the couriers to get step by step directions and by supervisors to view and confirm the routes that couriers will take.
 
+As with the database API this is a RESTful API that provides responses in JSON and runs as part of a flask app. The whole API (both the database API and the routing API) are part of the same flask app that can easily be called by the frontend part of the system that will be used by both the couriers and supervisors.
+
+The system will primarily rely on Google Maps \cite{GoogleMaps} for its mapping data however along with this customers will be able to provide their own mapping data. For example a customer may have a more detailed map of a certain area that can be used along side the data from Google Maps to provide better rout 
+
 For the prototype system Google Maps has been used for all of the mapping data however we would like to offer customers the option of using other mapping services or even their own maps in the product when it is brought to market. This could allow some customers to provide more detailed maps of certain areas for example. The API provides a route along with the step by step direction for how to reach the destination, this route can then easily be plotted on a map and the directions can easily be displayed by the frontend of the system that the couriers and supervisors interact with.
 
 Currently direction and routes allow for two modes of transport, driving and flying. We may wish to add to this in future to allow for other modes of transport to be used for example trains or walking. The customer could have the option to select their preferred modes of transport. The constraints on the routes are currently implemented as a list of way points that can be added by supervisors to ensure that certain areas are avoided however in the finished product this would be automated.
 
-As with the database API this is a RESTful API that provides responses in JSON and runs as part of a flask app. The whole API (both the database API and the routing API) are part of the same flask app that can easily be called by the frontend part of the system that will be used by both the couriers and supervisors.
+
 
 \section{Communication} \label{communicationarch}
+Communication between the front-end and back-end components can take place through one of two channels at any time. The primary channel is our private satellite network, this will be used whenever possible and it is hoped to be the only method of communication once the full network is operational. The backup communication channel is the internet, this will be used only when the satellite network is unavailable as it is less secure. 
 
-\section{Private Satellite Network}
+All transmissions through both channels will be end-to-end encrypted to protect their contents. The method of encryption used may vary based on the requirements of the customer. In order to further obfuscate our communications, each real transmission will be accompanied by a random number of fake transmissions. This will make finding our real communications significantly harder.
+
+\subsection{Private Satellite Network}
+A private satellite network will be launched. Initially, this network will only cover a small area of the globe (this area will likely be decided through feedback from potential customers). Revenue from the company's operations will be reinvested into expanding the satellite network. The final satellite network will have 100\% coverage of the globe with a suitable level of redundancy so that it is resilient to hardware failures.
+
+By using our own satellite network, we will have full control over the communication process and this will make our communications more secure. Operating on an isolated network will prevent malicious agents from intercepting or tampering with transmissions.
+
+\subsection{Internet}
+Our couriers should always have some method of communication with the back-end supervisors. If the courier is in an area that is not covered by our satellite network, it is necessary to have a backup method of communication. In these circumstances, we will allow communication through the public internet. We will not have the same level of control over the internet, so there is a greater risk that our transmissions could be intercepted. By having the internet as a backup, we will be able to operate outside of the coverage range of our initial satellite network and will increase the number of potential customers we can serve while the satellite network is being created.
+
 
 \section{Briefcase} \label{briefcasearch}
+Our system includes a briefcase that, if the customer chooses to, the courier can use to deliver the deliverable. The briefcase is unlocked by inserting a USB memory stick, which contains a message that has been encrypted with the recipients' private key, into a concealed USB port on the briefcase. The reason for using this mechanism is because we believe that current alternative methods of locking are not secure enough for context of delivering government sensitive documents. It is well known that physical key locks can be picked, combination locks can also be picked (or brute forced), and there is a growing consensus that the use of biometrics is insecure \cite{uludag2004biometric} \cite{aviraBiometric} \cite{betaBiometric}.
+
 The design of the briefcase must be considered from both a hardware and software perspective. The general design of the hardware system is shown in Fig. \ref{fig:briefcase_architecture}. All peripherals in the system are represented as circles in Fig. \ref{fig:briefcase_architecture}, while intermediate components are represented as rectangles.
 \begin{figure}[h]
     \centering

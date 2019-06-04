@@ -1,20 +1,22 @@
-A summary of the state of the implementation, at the time of the demonstration, and an assessment of what needs to be done in order to develop the system to an initially deployable state
 
-\section{Frontend}
-\subsection{Courier View}
-\begin{flushleft}
-At the time of the demonstration, the courier’s front end includes a hard-coded single user login system, a way of visualising the route that the back end has generated on a map, step by step directions are shown, routes can be requested from the back end by the user and messages can be sent by the user and all messages to and from the user are shown.
 
-To develop the system to initially deployable state, this section needs to be able to request the list of couriers and the passwords for them so that the login system can support all couriers in the back end and as they are added by the supervisor. The login system could also be extended so that the rest of the content shown is hidden until the user has logged in instead of how it is currently implemented where the forms and buttons can’t be used and messages, routes and directions aren’t shown until the user has logged in. Currently, there are no measures in place to make communication secure so work needs to be done to encrypt/decrypt data sent and received from requests made to the back end.
-\end{flushleft}
-\section{Backend}
+\section{Front-end}
+\subsection{Supervisor application}
+To produce a working front-end application for the supervisor we have React\cite{React} framework, allowing us to create reusable components together with Redux\cite{Redux} JavaScript library which is responsible for holding the current state of the application. For styling of the website we have used an existing CSS framework called Bootstrap\cite{Bootstrap}, thanks to which we could focus on the functionality rather than the appearance of the website.
+
+In the current prototype we have managed to implement the crucial systems of the supervisors application, although there are many elements that would have to be replaced for the final product. At the moment, the login page is just a placeholder, as we are not storing any user accounts in our database. The map view is also a placeholder displaying hard coded positions, as we do not have any registered couriers. The customers view fulfils all the specifications stated in the software architecture as the supervisor can display, create and alter customer records. These features are also available in the couriers and deliveries views. Sending messages to couriers is available through the couriers view and works as intended. On the deliveries view the supervisor can also inspect the route before creating a delivery record. Unfortunately setting up the pass thorough points is not yet supported.
+
+The only view that is missing is the server log view. Due to the time restriction we have decided that this feature is not crucial for the presentation purposes. The other views will definitely have to be improved for the implementation of the final product.
+\subsection{Courier application}
+At the time of the demonstration, the courier’s front end includes a hard-coded single user login system, a way of visualising the route that the back end has generated on a map, step by step directions are shown and messages can be sent by the user and all messages to and from the user are shown.
+
+To develop the system to initially deployable state, this section needs to be able to request the list of couriers and the passwords for them so that the login system can support all couriers in the back end and as they are added by the supervisor. The login system could also be extended so that the rest of the content shown is hidden until the user has logged in instead of how it is currently implemented where the forms and buttons can’t be used and messages, routes and directions aren’t shown until the user has logged in. Currently, there are no measures in place to make communication secure so work needs to be done to encrypt/decrypt data sent and received from requests made to the back end. As well as this, this section is currently set up in a way such that couriers can successfully request routes for deliveries they are not assigned to, so removing their ability to do this needs to be done before deployment. The current implementation requests a hardcoded route id each time but before deployment, this should be extended to support fetching the correct route based on the courier id instead.
+\section{Back-end}
 \subsection{Customer database}
-\begin{flushleft}
 A Docker image of Redis has been set up, and all the code interfacing it, at all three levels (data processing, RedisInterface, and API code) is complete. The API itself has also been dockerised. The processing, interface, and API-level code has been manual tested and unit tested to functional coverage. The latest version of the codebase passes all tests. Additionally, the code has been analysed using two Python PEP8 linters--- pep8 and pylint. All faults found by the linters have been removed, except for some cammelcase variable names highlighted by pylint, but used to match the names of database object attribues (for example "bannedCountries"). All code has been fully documented.
-\end{flushleft}
-\begin{flushleft}
+
 The only further work required to deploy this component is further configuring the database and API server to increase the overall system security. Specifically, the oustanding tasks are:
-\end{flushleft}
+
 \begin{itemize}
     \item Set up authentication for the Redis database
     \item Disable all database commands not used by the API
@@ -22,9 +24,8 @@ The only further work required to deploy this component is further configuring t
     \item Set up firewall access for the Redis Docker image
     \item Encrypt all API requests and responses
 \end{itemize}
-\begin{flushleft}
+
 Based on the fact that these require modifications to configuration files, but no development work, we estimate the component would be ready to deploy given at most two days of extra work.
-\end{flushleft}
 
 \subsection{Maps and routing}
 
@@ -32,8 +33,6 @@ The maps and routing part of the backend system is part of the same API as the c
 
 \section{Briefcase}
 % Work to be done: work out how to destroy items
+Currently, a simple prototype of the locking mechanism has been created using a Raspberry Pi \cite{raspberryPi} with a solenoid to demonstrate the locking characteristic. This area of the system requires a large amount of development to be completed until it is ready for production. Firstly, the hardware platform must be switched to a microcontroller, to reduce power consumption, and a thorough investigation should be carried out to determine the best electronic locking mechanism currently available on the market. Furthermore, a second investigation should also be carried out to find the most suitable mechanism for destroying the contents of the briefcase. Finally, once all the components are decided, a second battery powered hardware prototype should be produced and physically fitted into a briefcase.
 
-\begin{itemize}
-    \item Current implemented features
-    \item Work to be done
-\end{itemize}
+Once these steps are completed, it is simply a case of streamlining the manufacturing process to build a large amount of briefcases effieciently.
