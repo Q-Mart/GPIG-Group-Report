@@ -71,7 +71,7 @@ After collecting the requirements for the system we created a basic block diagra
 
 As part of designing the final solution, a risk assessment was performed. This enabled the team to develop our initial ideas into something more concrete, ensuring major risks to the whole system including the courier, briefcase and communication were taken in to account, as when combined, securing these parts of the system ensures that the packages reach their final destination. The risk assessment findings were documented in a risk register table as seen in Table \ref{tab:riskRegister}.
 
-The risk register scores each risks based on two factors - Impact (I) and Likelihood (L) to give an overall score of Severity (S). Each risk is given an ID which contains a unique number and what the risk applies to/comes from. The categories are as follows: Communication/Transport (C), Briefcase (B), Courier  (M) or General (G). Each of these is rated on a scale of 1 to 5 where 5 is very likely/has a high impact/is very severe, these are also colour coordinated to represent the risk to the project/product. Each risk has a risk status which can either be Identified (I), Controlled/Accepted (C) or Resolved (R). The risks to the project itself are shown within Appendix \ref{tab:projectrisks}, these were considered to ensure completion of the prototype, report and presentation to a high standard.
+The risk register scores each risks based on two factors - Impact (I) and Likelihood (L) to give an overall score of Severity (S). Each risk is given an ID which contains a unique number and what the risk applies to/comes from. The categories are as follows: Communication/Transport (C), Briefcase (B), Courier  (M) or General (G). Each of these is rated on a scale of 1 to 5 where 5 is very likely/has a high impact/is very severe. Each risk has a risk status which can either be Identified (I), Controlled/Accepted (C) or Resolved (R). The risks to the project itself are shown within Appendix \ref{tab:projectrisks}, these were considered to ensure completion of the prototype, report and presentation to a high standard.
 
 
 \newcommand{\specialcell}[2][c]{%
@@ -83,14 +83,14 @@ The risk register scores each risks based on two factors - Impact (I) and Likeli
 \hline
     \textbf{ID} & \textbf{Risk Description} & \textbf{Mitigation (M) and/or Contingency (C) Actions} & \textbf{Risk Status} \\
 \hline
-1-M & Courier becomes too ill to not be able to carry out the transportation of the secured item
+1-M & Courier becomes too ill to be able to carry out the transportation of the secured item
 I-5 L-2 S-4 & \specialcell{M: Ensure that the courier is in good health before being sent out on a delivery \\
 C: Both the courier’s and the briefcase’s location will be tracked throughout and a replacement courier will be sent to continue with the delivery} & C \\
 \hline
 2-M & Courier would like to steal the contents of the briefcase
 I-5 L-2 S-4 & \specialcell{M: The courier will be subject to extensive background checks prior to being hired to carry out specific projects.\\
 M: The briefcase will have a secure mechanism that only the recipient of the data can unlock \\
-C: Item self destruct?} & C \\
+C: The item self destruct (along with approval from the customer) if a wrong key is entered in to the lock} & C \\
 \hline
 3-M & Courier is maliciously intercepted whilst en route
 I-4 L-1 S-3 & \specialcell{M: The courier will not be sent through high-risk countries/areas, according to a continuously updated database which provides constraints for the courier\\
@@ -114,11 +114,11 @@ M: Multiple satellites will be launched at once in case one fails} & C \\
 7-C & Map functionality is not up to date
 I-3 L-3 S-3 & M: Ensure the most frequently updated mapping tools are used & I/C \\
 \hline
-X-C & Parameter Overwrite Injection & M: Commands to the Redis database would be renamed within the code and therefore the attackers would not know the name of the functions to call in order to access the database & \\
+X-C & Parameter Overwrite Injection & M: Commands to the Redis database would be renamed within the code and therefore the attackers would not know the name of the functions to call in order to access the database & C \\
 \hline
 8-B & There is a risk that the electronic locking mechanism fails
-I-5 L-3 S-4 & M: Thorough testing of the device will be carried out prior to the product being created for use in the field
-C: Self destruct? & I/C\\
+I-5 L-3 S-4 & \specialcell{M: Thorough testing of the device will be carried out prior to the product being created for use in the field\\
+C: Self destruct could also be activated if the locking mechanism fails and this choice has been made by the customer} & I/C\\
 \hline
 9-B & Battery for the electronic locking mechanism runs out
 I-5 L-3 S-4 & \specialcell{M: Ensure the original battery has enough capacity to fulfil one delivery\\
@@ -147,6 +147,6 @@ The frontend team developed the supervisor and courier components based on the s
 The entire team spent the final two weeks of development integrating the backend and frontend. Some wrote code, while others investigated and fixed bugs discovered throughout the process. Team members who had no tasks to complete at a given time compiled documentation for the report and presentation.
 
 \section{Testing}
-Due to the limited time available, the team did not impose any overall testing standards for the project. Members tested their components as they felt necessary. The frontend underwent a user acceptance test using a web browser. The routing API was manually tested using the Insomnia REST client. We decided against unit testing due to the variability of routes, as it would be impossible to achieve thorough coverage. Additionally, this component relies on Google Maps, which we trust has been thoroughly tested, though we aim to test it was integrated correctly prior to a full product release. The database API was tested manually using Postman, and unit tested to functional coverage. This component was tested more thoroughly due to the frontend relying heavily on it.
+Due to the limited time available, the team did not impose any overall testing standards for the project. Members tested their components as they felt necessary. The frontend underwent a user acceptance test using a web browser. The routing API was manually tested using the Insomnia REST client. We decided against unit testing due to the variability of routes, as it would be impossible to achieve thorough coverage. Additionally, this component relies on Google Maps, which we trust has been thoroughly tested, though we aim to test it was integrated correctly prior to a full product release. The database API was tested manually using Postman, and unit tested to complete functional coverage. This component was tested more thoroughly due to the frontend relying heavily on it.
 
 These tests allowed us to develop a working prototype. However, our product is mission critical, and as such requires thorough automated testing of every component to a higher standard of coverage prior to deployment.

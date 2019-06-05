@@ -1,8 +1,9 @@
 %%TC:ignore
 \newcommand{\specialcell}[2][c]{%
   \begin{tabular}[#1]{@{}p{0.5\textwidth}@{}}#2\end{tabular}}
+
+\section{Additional tables}
   
-\centering
 \begin{longtable}{|p{0.05\textwidth}|m{0.27\textwidth}|p{0.5\textwidth}|p{0.08\textwidth}|}
     \hline
         \textbf{ID} & \textbf{Risk Description} & \textbf{Mitigation (M) and/or Contingency (C) Actions} & \textbf{Risk Status} \\
@@ -27,22 +28,270 @@
 
 \begin{table}[!htbp]
     \centering
-        \begin{tabular}{p{0.8\textwidth}|p{0.2\textwidth}}
-        & \\
+        \begin{tabular}{|p{0.8\textwidth}|p{0.2\textwidth}|}
+        \hline
         Integrated Circuit \cite{nxpDigikey} & £5.75 \\
+        \hline
         Solenoid \cite{solenoidDigikey} & £3.92 \\
+        \hline
         Battery \cite{batteryDigikey} & £26.37 \\
+        \hline
         PCB \cite{pcbFabrication} & £27.57 \\
+        \hline
         \textbf{Total of main components} & \textbf{£63.61} \\
-        & \\
+        \hline
         Cost of additional components 
         (capacitors, resistors, voltage regulators etc). 
         Unknown exact amount until actual hardware developed so 
         30\% of main component price used & £19.08 \\
+        \hline
         Reinforced metal briefcase \cite{reinforcedBriefcase} & £16.43 \\
+        \hline
         \textbf{Overall} & \textbf{£99.12} \\
+        \hline
     \end{tabular}
 \caption{Briefcase Material Costs}
 \label{tab:briefcasematcosts}
 \end{table}
+\newpage
+
+\section{Database structure}
+The database stores customer data:
+
+\begin{minipage}{6.5cm}
+    Customer: \{
+    \begin{itemize} 
+        \itemsep-0.5em
+        \item[] customerId: id,
+        \item[] name: string,
+        \item[] address: string,
+        \item[] postcode: string,
+        \item[] city: string,
+        \item[] country: string,
+        \item[] publicKey: string,
+        \item[] contactNumber: string,
+        \item[] email: string,
+        \item[] constraints: id
+    \end{itemize}
+    \}
+\end{minipage}
+\begin{minipage}{10cm}
+    \hspace{1cm} \\
+    \begin{itemize}
+        \itemsep-0.5em
+        \item[] \textit{unique customer identifier}
+        \item[] \textit{customer name}
+        \item[] \textit{address address}
+        \item[] \textit{address postcode}
+        \item[] \textit {address city}
+        \item[] \textit{address country}
+        \item[] \textit{customer public key, if known}
+        \item[] \textit{customer phone number}
+        \item[] \textit{customer email}
+        \item[] \textit{identifier of customer constraint}
+    \end{itemize}
+    \hspace{1cm} \\
+\end{minipage}
+
+Every customer is a sender or receiver in a delivery: 
+
+\begin{minipage}{6.5cm}
+    Delivery: \{
+    \begin{itemize}
+        \itemsep-0.5em
+        \item[] deliveryId: id,
+        \item[] sender: id,
+        \item[] receiver: id,
+        \item[] preferDestroy: boolean,
+        \item[] customerMap: id,
+        \item[] customerPublicKey: string,
+        \item[] reinforcedBriefcase: boolean,
+        \item[] lockMessage: string,
+        \item[] couriers: [id],
+        \item[] currentCourier: id,
+        \item[]  supervisors: [id],
+        \item[] constraints: id
+    \end{itemize}
+    \}
+\end{minipage}
+\begin{minipage}{10cm}
+    \hspace{1cm} \\
+    \begin{itemize}
+        \itemsep-0.5em
+        \item[] \textit{unique delivery identifier}
+        \item[] \textit{sending customer id}
+        \item[] \textit{receiving customer id}
+        \item[] \textit{destroy package on capture preference}
+        \item[] \textit{identifier of optional custom map}
+        \item[] \textit{optional custom receiver public key}
+        \item[] \textit{whether to use reinforced briefcase}
+        \item[] \textit{reinforced briefcase password}
+        \item[] \textit{identifiers of couriers handling the package}
+        \item[] \textit{identifier of courier currently holding the package}
+        \item[] \textit{identifiers of supervisors handling the package}
+        \item[] \textit{identifier of delivery constraint}
+    \end{itemize}
+    \hspace{1cm} \\
+\end{minipage}
+
+Every delivery links to a constraint object defining customer preferences.
+
+\begin{minipage}{7cm}
+    Constraint: \{ 
+    \begin{itemize}
+        \itemsep-0.5em
+        \item[] constraintId: id,
+        \item[] active: boolean,
+        \item[] bannedCountries: [string],
+        \item[] bannedAirspaces: [string],
+        \item[] bannedWaters: [string],
+        \item[] bannedRoads: [string],
+        \item[] allowedCar: boolean,
+        \item[] allowedBoat: boolean,
+        \item[] allowedFlight: boolean,
+        \item[] allowedPublicTransport: boolean
+        \item[] deadline: string
+    \end{itemize}
+    \}
+\end{minipage}
+\begin{minipage}{10cm}
+    \hspace{1cm} \\
+    \begin{itemize}
+        \itemsep-0.5em
+        \item[] \textit{unique identifier of constraint}
+        \item[] \textit{whether constraint is in use}
+        \item[] \textit{list of countries to avoid}
+        \item[] \textit{list of airspaces to avoid}
+        \item[] \textit{list of bodies of water to avoid}
+        \item[] \textit{list of roads to avoid}
+        \item[] \textit{(booleans specifying  which}
+        \item[] \textit{methods of transport are allowed)}
+        \item[] \hspace{1cm}
+        \item[] \hspace{1cm}
+        \item[] \textit{time by which delivery must occur (ISO format)}
+    \end{itemize}
+    \hspace{1cm} \\
+\end{minipage}
+
+Information about all couriers and supervisors is also stored in the database:
+
+\begin{minipage}{6.5cm}
+    Courier: \{
+    \begin{itemize}
+        \itemsep-0.5em
+        \item[] courierId: id,
+        \item[] missionId: id,
+        \item[] picture: string,
+        \item[] name: string,
+        \item[] publicKey: string,
+        \item[] contactNumber: string,
+        \item[] email: string,
+        \item[] languages: [string],
+        \item[] visas: [string],
+        \item[] external: boolean,
+        \item[] company: string
+    \end{itemize}
+    \}
+\end{minipage}
+\begin{minipage}{10cm}
+    \hspace{1cm}
+    \begin{itemize}
+        \itemsep-0.5em
+        \item[] \textit{unique identifier of courier}
+        \item[] \textit{identifier of current delivery, if any}
+        \item[] \textit{link to picture of courier}
+        \item[] \textit{courier name}
+        \item[] \textit{courier public key, for authentication}
+        \item[] \textit{courier phone number}
+        \item[] \textit{courier email}
+        \item[] \textit{languages spoken by courier}
+        \item[] \textit{visas courier possesses}
+        \item[] \textit{whether the courier works for a different company}
+        \item[] \textit{courier's company, if external}
+    \end{itemize}
+    \hspace{1cm}
+\end{minipage}
+
+The external and company attributes allow us to collaborate with other companies by outsourcing couriers.
+
+\begin{minipage}{6.5cm}
+Supervisor: \{
+\begin{itemize}
+    \itemsep-0.5em
+    \item[] supervisorId: id,
+    \item[] name: string,
+    \item[] contactNumber: string,
+    \item[] email: string
+\end{itemize}
+\}
+\end{minipage}
+\begin{minipage}{10cm}
+\hspace{1cm}
+\begin{itemize}
+    \itemsep-0.5em
+    \item[] \textit{unique identifier of supervisor}
+    \item[] \textit{supervisor's name}
+    \item[] \textit{supervisor's phone number}
+    \item[] \textit{supervisor's email address}
+\end{itemize}
+\hspace{1cm}
+\end{minipage}
+
+The database also stores all messages sent between staff on the private network.
+
+\begin{minipage}{6.5cm}
+Message: \{
+\begin{itemize}
+    \itemsep-0.5em
+    \item[] timestamp: string,
+    \item[] message: string,
+    \item[] fromType: string,
+    \item[] fromId: string,
+    \item[] toType: string,
+    \item[] toId: string
+\end{itemize}
+\}
+\end{minipage}
+\begin{minipage}{10cm}
+\hspace{1cm}
+\begin{itemize}
+    \itemsep-0.5em
+    \item[] \textit{time the message was sent (ISO format)}
+    \item[] \textit{message text}
+    \item[] \textit{sender type (courier/supervisor)}
+    \item[] \textit{sender's identifier}
+    \item[] \textit{receiver type (courier/supervisor)}
+    \item[] \textit{receiver's identifier}
+\end{itemize}
+\hspace{1cm}
+\end{minipage}
+
+Finally, the database stores an audit trail for every delivery, using objects called delivery events.
+
+\begin{minipage}{6.5cm}
+DeliveryEvent: \{
+\begin{itemize}
+    \itemsep-0.5em
+    \item[] deliveryId: id,
+    \item[] timestamp: string,
+    \item[] latitude: float,
+    \item[] longitude: float,
+    \item[] description: string,
+    \item[] notes: string
+\end{itemize}
+\}
+\end{minipage}
+\begin{minipage}{10cm}
+\hspace{1cm}
+\begin{itemize}
+    \itemsep-0.5em
+    \item[] \textit{identifier of delivery}
+    \item[] \textit{time at which event occurred (ISO format)}
+    \item[] \textit{latitude at which event occurred}
+    \item[] \textit{longitude at which event occurred}
+    \item[] \textit{description of event (e.g. "delivered")}
+    \item[] \textit{optional additional notes}
+\end{itemize}
+\hspace{1cm}
+\end{minipage}
 %%TC:endignore

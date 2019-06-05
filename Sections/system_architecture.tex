@@ -28,242 +28,18 @@ To promote our services to our potential customers we will create a website whic
 \subsection{Customer database} \label{databasearch}
 The first component of the backend is a database of customer and staff information. Its most important task is storing delivery information and constraints, which are merged with the maps database to provide directions to the courier. It is designed to store the following datatypes:
 
-\begin{minipage}{6.5cm}
-    Customer: \{
-    \begin{itemize} 
-        \itemsep-0.5em
-        \item[] customerId: id,
-        \item[] name: string,
-        \item[] address: string,
-        \item[] postcode: string,
-        \item[] city: string,
-        \item[] country: string,
-        \item[] publicKey: string,
-        \item[] contactNumber: string,
-        \item[] email: string,
-        \item[] constraints: id
-    \end{itemize}
-    \}
-\end{minipage}
-\begin{minipage}{10cm}
-    \hspace{1cm} \\
-    \begin{itemize}
-        \itemsep-0.5em
-        \item[] \textit{unique customer identifier}
-        \item[] \textit{customer name}
-        \item[] \textit{address address}
-        \item[] \textit{address postcode}
-        \item[] \textit {address city}
-        \item[] \textit{address country}
-        \item[] \textit{customer public key, if known}
-        \item[] \textit{customer phone number}
-        \item[] \textit{customer email}
-        \item[] \textit{identifier of customer constraint}
-    \end{itemize}
-    \hspace{1cm} \\
-\end{minipage}
-
-Every customer is a sender or receiver in a delivery: 
-
-\begin{minipage}{6.5cm}
-    Delivery: \{
-    \begin{itemize}
-        \itemsep-0.5em
-        \item[] deliveryId: id,
-        \item[] sender: id,
-        \item[] receiver: id,
-        \item[] preferDestroy: boolean,
-        \item[] customerMap: id,
-        \item[] customerPublicKey: string,
-        \item[] reinforcedBriefcase: boolean,
-        \item[] lockMessage: string,
-        \item[] couriers: [id],
-        \item[] currentCourier: id,
-        \item[]  supervisors: [id],
-        \item[] constraints: id
-    \end{itemize}
-    \}
-\end{minipage}
-\begin{minipage}{10cm}
-    \hspace{1cm} \\
-    \begin{itemize}
-        \itemsep-0.5em
-        \item[] \textit{unique delivery identifier}
-        \item[] \textit{sending customer id}
-        \item[] \textit{receiving customer id}
-        \item[] \textit{destroy package on capture preference}
-        \item[] \textit{identifier of optional custom map}
-        \item[] \textit{optional custom receiver public key}
-        \item[] \textit{whether to use reinforced briefcase}
-        \item[] \textit{reinforced briefcase password}
-        \item[] \textit{identifiers of couriers handling the package}
-        \item[] \textit{identifier of courier currently holding the package}
-        \item[] \textit{identifiers of supervisors handling the package}
-        \item[] \textit{identifier of delivery constraint}
-    \end{itemize}
-    \hspace{1cm} \\
-\end{minipage}
-
-Every delivery links to a constraint object defining customer preferences.
-
-\begin{minipage}{7cm}
-    Constraint: \{ 
-    \begin{itemize}
-        \itemsep-0.5em
-        \item[] constraintId: id,
-        \item[] active: boolean,
-        \item[] bannedCountries: [string],
-        \item[] bannedAirspaces: [string],
-        \item[] bannedWaters: [string],
-        \item[] bannedRoads: [string],
-        \item[] allowedCar: boolean,
-        \item[] allowedBoat: boolean,
-        \item[] allowedFlight: boolean,
-        \item[] allowedPublicTransport: boolean
-        \item[] deadline: string
-    \end{itemize}
-    \}
-\end{minipage}
-\begin{minipage}{10cm}
-    \hspace{1cm} \\
-    \begin{itemize}
-        \itemsep-0.5em
-        \item[] \textit{unique identifier of constraint}
-        \item[] \textit{whether constraint is in use}
-        \item[] \textit{list of countries to avoid}
-        \item[] \textit{list of airspaces to avoid}
-        \item[] \textit{list of bodies of water to avoid}
-        \item[] \textit{list of roads to avoid}
-        \item[] \textit{(booleans specifying  which}
-        \item[] \textit{methods of transport are allowed)}
-        \item[] \hspace{1cm}
-        \item[] \hspace{1cm}
-        \item[] \textit{time by which delivery must occur (ISO format)}
-    \end{itemize}
-    \hspace{1cm} \\
-\end{minipage}
-
-Constraints exist on three levels: delivery, customer, and overall. Every delivery has its own constraints, allowing specific objects to be transported according to particular requirements. Every customer can have constraints applied to all of the deliveries where they are the sender. For example, government bodies may wish for none of their packages to cross countries they have strained diplomatic relations with. Finally, overall constraints are applied to all deliveries. These are applied when it becomes unsafe for anyone to traverse a particular area. Additional to these constraints we store staff contact and authentication data.
-
-\begin{minipage}{6.5cm}
-    Courier: \{
-    \begin{itemize}
-        \itemsep-0.5em
-        \item[] courierId: id,
-        \item[] missionId: id,
-        \item[] picture: string,
-        \item[] name: string,
-        \item[] publicKey: string,
-        \item[] contactNumber: string,
-        \item[] email: string,
-        \item[] languages: [string],
-        \item[] visas: [string],
-        \item[] external: boolean,
-        \item[] company: string
-    \end{itemize}
-    \}
-\end{minipage}
-\begin{minipage}{10cm}
-    \hspace{1cm}
-    \begin{itemize}
-        \itemsep-0.5em
-        \item[] \textit{unique identifier of courier}
-        \item[] \textit{identifier of current delivery, if any}
-        \item[] \textit{link to picture of courier}
-        \item[] \textit{courier name}
-        \item[] \textit{courier public key, for authentication}
-        \item[] \textit{courier phone number}
-        \item[] \textit{courier email}
-        \item[] \textit{languages spoken by courier}
-        \item[] \textit{visas courier possesses}
-        \item[] \textit{whether the courier works for a different company}
-        \item[] \textit{courier's company, if external}
-    \end{itemize}
-    \hspace{1cm}
-\end{minipage}
-
-The external and company attributes allow us to collaborate with other companies by outsourcing couriers.
-
-\begin{minipage}{6.5cm}
-Supervisor: \{
 \begin{itemize}
-    \itemsep-0.5em
-    \item[] supervisorId: id,
-    \item[] name: string,
-    \item[] contactNumber: string,
-    \item[] email: string
+    \item Customer
+    \item Delivery
+    \item Constraint (delivery deadline, allowed transport methods, and areas to avoid)
+    \item Courier
+    \item Supervisor
+    \item Message (messages between supervisors and couriers)
+    \item DeliveryEvent (significant delivery events, such as "picked up by courier" or "delivered", used to keep an audit trail for each delivery)
 \end{itemize}
-\}
-\end{minipage}
-\begin{minipage}{10cm}
-\hspace{1cm}
-\begin{itemize}
-    \itemsep-0.5em
-    \item[] \textit{unique identifier of supervisor}
-    \item[] \textit{supervisor's name}
-    \item[] \textit{supervisor's phone number}
-    \item[] \textit{supervisor's email address}
-\end{itemize}
-\hspace{1cm}
-\end{minipage}
 
-The database also stores all messages sent between staff on the private network.
+Full details of the structure of each data type can be found int he appendix. The most complex type is the constraint. These exist on three levels: delivery, customer, and overall. Every delivery has its own constraints, allowing specific objects to be transported according to particular requirements. Every customer can have constraints applied to all of the deliveries where they are the sender. For example, government bodies may wish for none of their packages to cross countries they have strained diplomatic relations with. Finally, overall constraints are applied to all deliveries. These are applied when it becomes unsafe for anyone to traverse a particular area. Additional to these constraints we store staff contact and authentication data.
 
-\begin{minipage}{6.5cm}
-Message: \{
-\begin{itemize}
-    \itemsep-0.5em
-    \item[] timestamp: string,
-    \item[] message: string,
-    \item[] fromType: string,
-    \item[] fromId: string,
-    \item[] toType: string,
-    \item[] toId: string
-\end{itemize}
-\}
-\end{minipage}
-\begin{minipage}{10cm}
-\hspace{1cm}
-\begin{itemize}
-    \itemsep-0.5em
-    \item[] \textit{time the message was sent (ISO format)}
-    \item[] \textit{message text}
-    \item[] \textit{sender type (courier/supervisor)}
-    \item[] \textit{sender's identifier}
-    \item[] \textit{receiver type (courier/supervisor)}
-    \item[] \textit{receiver's identifier}
-\end{itemize}
-\hspace{1cm}
-\end{minipage}
-
-Finally, the database stores an audit trail for every delivery, using objects called delivery events.
-
-\begin{minipage}{6.5cm}
-DeliveryEvent: \{
-\begin{itemize}
-    \itemsep-0.5em
-    \item[] deliveryId: id,
-    \item[] timestamp: string,
-    \item[] latitude: float,
-    \item[] longitude: float,
-    \item[] description: string,
-    \item[] notes: string
-\end{itemize}
-\}
-\end{minipage}
-\begin{minipage}{10cm}
-\hspace{1cm}
-\begin{itemize}
-    \itemsep-0.5em
-    \item[] \textit{identifier of delivery}
-    \item[] \textit{time at which event occurred (ISO format)}
-    \item[] \textit{latitude at which event occurred}
-    \item[] \textit{longitude at which event occurred}
-    \item[] \textit{description of event (e.g. "delivered")}
-    \item[] \textit{optional additional notes}
-\end{itemize}
-\hspace{1cm}
-\end{minipage}
 \begin{figure}[h]
 \includegraphics[scale=0.5]{database_outline.png}
     \centering
@@ -328,13 +104,9 @@ The second major component of the backend part of the system is the mapping and 
 
 As with the database API this is a RESTful API that provides responses in JSON and runs as part of a flask app. The whole API (both the database API and the routing API) are part of the same flask app that can easily be called by the frontend part of the system that will be used by both the couriers and supervisors.
 
-The system will primarily rely on Google Maps \cite{GoogleMaps} for its mapping data however along with this customers will be able to provide their own mapping data. For example a customer may have a more detailed map of a certain area that can be used along side the data from Google Maps to provide better rout 
+The system will primarily rely on Google Maps \cite{GoogleMaps} for its mapping data however along with this customers will be able to provide their own mapping data. For example a customer may have a more detailed map of a certain area that can be used along side the data from Google Maps to provide better routing. We are also planning to expand to a wider range of commercial mapping providers after the system is launched so we are no longer relying on a single one. When using these commercial mapping providers we will send some fake requests to their APIs along with the real ones in an effort to hide the location of our couriers from third parties.
 
-For the prototype system Google Maps has been used for all of the mapping data however we would like to offer customers the option of using other mapping services or even their own maps in the product when it is brought to market. This could allow some customers to provide more detailed maps of certain areas for example. The API provides a route along with the step by step direction for how to reach the destination, this route can then easily be plotted on a map and the directions can easily be displayed by the frontend of the system that the couriers and supervisors interact with.
-
-Currently direction and routes allow for two modes of transport, driving and flying. We may wish to add to this in future to allow for other modes of transport to be used for example trains or walking. The customer could have the option to select their preferred modes of transport. The constraints on the routes are currently implemented as a list of way points that can be added by supervisors to ensure that certain areas are avoided however in the finished product this would be automated.
-
-
+Along with providing maps customers will also be able to provide constraints that apply to the routes their packages take when being delivered. These can be specified for all deliveries or just for individual packages depending on the customers needs. For example a customer may not wish for their packages to travel through countries where they have no diplomatic relations as this may leave them vulnerable.
 
 \section{Communication} \label{communicationarch}
 Communication between the front-end and back-end components can take place through one of two channels at any time. The primary channel is our private satellite network, this will be used whenever possible and it is hoped to be the only method of communication once the full network is operational. The backup communication channel is the internet, this will be used only when the satellite network is unavailable as it is less secure. 
